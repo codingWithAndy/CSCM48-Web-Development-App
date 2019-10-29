@@ -18,6 +18,7 @@ class CreateBlogUsersTable extends Migration
             $table->string('first_name');
             $table->string('surname');
             $table->dateTime('date_of_birth')->nullable();
+
             $table->timestamps();
         });
     }

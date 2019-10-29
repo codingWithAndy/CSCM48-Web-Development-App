@@ -17,7 +17,10 @@ class CreateBlogPostsTable extends Migration
             $table->bigIncrements('id');
             $table->string('blog_title');
             $table->string('blog_content');
+            $table->unsignedBigInteger('blog_user_id');
             $table->timestamps();
+
+            $table->foreign('blog_user_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
