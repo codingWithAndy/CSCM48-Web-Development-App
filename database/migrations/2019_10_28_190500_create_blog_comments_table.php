@@ -16,7 +16,10 @@ class CreateBlogCommentsTable extends Migration
         Schema::create('blog_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('blog_comment');
+            $table->unsignedBigInteger('blog_id');
             $table->timestamps();
+
+            $table->foreign('blog_id')->references('id')->on('blog_posts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
