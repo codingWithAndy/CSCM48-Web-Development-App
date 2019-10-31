@@ -12,4 +12,9 @@ class BlogPost extends Model
     {
         return $this->belongsTo('App\BlogUser');
     }
+
+    public function blogComments()
+    {
+        return $this->hasMany('App\BlogComment');
+    }
 }
