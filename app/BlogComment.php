@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class BlogComment extends Model
 {
     //
-    public function blogPosts()
+    public function blogPost()
     {
         return $this->belongsTo('App\BlogPost');
     }
-
 
 }

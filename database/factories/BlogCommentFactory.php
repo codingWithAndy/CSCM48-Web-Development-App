@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(BlogComment::class, function (Faker $faker) {
     return [
         //
-        'blog_comment' => $faker->paragraph(1, true),
-        'blog_id' => $faker->randomFloat(0, 1, 40),
+        'comment_for_blog' => $faker->paragraph(1, true),
+        'blog_post_id' => App\BlogPost::inRandomOrder()->first()->id, //$faker->randomFloat(0, 1, 40),
     ];
 });
