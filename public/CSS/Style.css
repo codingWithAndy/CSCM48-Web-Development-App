@@ -1,0 +1,13 @@
+/* General Tags  */
+
+h1 {
+    text-align: center;
+    padding: 5%;
+}
+
+
+/* layouts -> app.blade.php Tags   */
+
+.content {
+    padding: 0% 10%;
+}
