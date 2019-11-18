@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BlogUser extends Model
 {
     //
-    public function blogPost()
+    public function blogPosts()
     {
         return $this->hasMany('App\BlogPost');
     }

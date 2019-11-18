@@ -17,4 +17,9 @@ class BlogPost extends Model
     {
         return $this->hasMany('App\BlogComment');
     }
+
+    public function blogTags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
 }
