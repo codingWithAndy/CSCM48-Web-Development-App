@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 Route::get('blog_posts', 'BlogPostController@index')->name('blog_post.index');
 Route::get('blog_posts/{id}', 'BlogPostController@show')->name('blog_post.show');
+//Route::get('blog_posts/{id}', 'BlogPostController@comments')->name('blog_post.comments');

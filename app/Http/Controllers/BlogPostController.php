@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BlogPost;
+use App\BlogComment;
 
 class BlogPostController extends Controller
 {
@@ -15,20 +16,27 @@ class BlogPostController extends Controller
     public function index()
     {
         //
-        $blogPosts = BlogPost::all();
-        //$blogPosts = BlogPost::where('id'=1)->paginate(10);
-
+        $blogPosts = BlogPost::paginate(10);
+        
         return view('blogposts.index', ['blogposts' => $blogPosts]);
-
     }
 
     public function show($id)
     {
         $blogPost = BlogPost::findOrFail($id);
-
+        
         return view('blogposts.posts', ['blogpost' => $blogPost]);
     }
 
+    /*public function comments($id)
+    {
+        //$blogPost = BlogPost::findOrFail($id);
+        $blogComment = BlogComment::where('blog_post_id', '=', $id);   //['blogcomments' => $blogComment ]
+
+
+        return view('blogposts.posts', ['blogcomments' => $blogComment]);
+    }
+*/
     /**
      * Show the form for creating a new resource.
      *

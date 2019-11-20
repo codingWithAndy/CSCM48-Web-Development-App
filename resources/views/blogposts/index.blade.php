@@ -9,4 +9,6 @@
                 <li>{{ $blogPost->blog_title}}</li>
             @endforeach
         </ul>
+
+ {{$blogposts->links()}}
 @endsection
