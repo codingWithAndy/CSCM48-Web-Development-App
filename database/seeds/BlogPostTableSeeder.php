@@ -25,7 +25,7 @@ class BlogPostTableSeeder extends Seeder
                 );
         });
 
-        dd($tags);
+        
 
         
     }

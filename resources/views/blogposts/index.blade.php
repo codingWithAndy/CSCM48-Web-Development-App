@@ -6,9 +6,11 @@
     <p>The Blog Posts:</p>
         <ul>
             @foreach ($blogposts as $blogPost)
-                <li>{{ $blogPost->blog_title}}</li>
+                <li><a href="http://blogsite.test/blog_posts/{{$blogPost->id}}">{{ $blogPost->blog_title}}</li></a>
             @endforeach
+            
         </ul>
-
- {{$blogposts->links()}}
+    
+    {{$blogposts->links()}}
+    
 @endsection

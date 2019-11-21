@@ -8,8 +8,9 @@ h1 {
 
 /* layouts -> app.blade.php Tags   */
 
-.content {
-    padding: 0% 10%;
+.content 
+{
+    padding: 0% 25%;
 }
 
 .footer
@@ -19,9 +20,4 @@ h1 {
     margin: auto;
     padding-top: 15px;
     height: 50px;
-}
-
-.float-right
-{
-    margin-right: 0%;
 }
