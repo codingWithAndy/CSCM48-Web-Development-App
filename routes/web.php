@@ -11,6 +11,14 @@
 |
 */
 
+use App\Twitter;
+
+app()->singleton('App\Twitter', function ($app){
+    return new Twitter();
+    
+});
+
+Route::get('exampleroute', 'BlogPostController@tweet');
 Route::get('/', function () {
     return view('welcome');
 });
