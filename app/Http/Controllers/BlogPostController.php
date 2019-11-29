@@ -19,20 +19,20 @@ class BlogPostController extends Controller
     {
         //
         $blogPosts = BlogPost::paginate(10);
-        
+
         return view('blogposts.index', ['blogposts' => $blogPosts]);
     }
 
     public function show($id)
     {
         $blogPost = BlogPost::findOrFail($id);
-        
+
         return view('blogposts.posts', ['blogpost' => $blogPost]);
     }
 
 
     // Trying to add twitter API functionality
-    public function tweet(Twitter $t) {
+    /*public function tweet(Twitter $t) {
         $t = app()->make('twitter');
 
         require "Apptwitteroauth/autoload.php";
@@ -47,7 +47,7 @@ class BlogPostController extends Controller
         // Get tweets
         $statuses = $connection->get("status/home_timeline", ["count" => 25, "exclude_replies" => true]);
     }
-
+*/
     /**
      * Show the form for creating a new resource.
      *
@@ -56,6 +56,7 @@ class BlogPostController extends Controller
     public function create()
     {
         //
+        return view('blogposts.create');
     }
 
     /**
@@ -67,6 +68,16 @@ class BlogPostController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'tag1' => 'nullable|integer',
+            'tag2' => 'nullable|integer',
+            'tag3' => 'nullable|integer',
+
+        ]);
+
+        return "Passed Validation";
     }
 
     /**
