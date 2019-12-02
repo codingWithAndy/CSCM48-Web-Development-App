@@ -77,7 +77,17 @@ class BlogPostController extends Controller
 
         ]);
 
-        return "Passed Validation";
+        $post = new BlogPost;
+
+        $post->blog_title = $validatedData['title'];
+        $post->blog_content = $validatedData['content'];
+        $post->blog_user_id = '1';
+
+        $post->save();
+
+        session()->flash('message', 'Blog post was created!');
+        return redirect()->route('blog_post.index');
+
     }
 
     /**

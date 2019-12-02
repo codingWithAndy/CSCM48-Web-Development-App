@@ -13,7 +13,7 @@
 
     {{$blogposts->links()}}
 
-    <a href="{{ route('blog_post.create')}}">Create a blog post!</a>
+    <a href="{{ route('blog_post.create') }}">Create a blog post!</a>
 
     {{--<a href="{{route('blog_posts.create')}}">Create a blog post!</a>--}}
 
