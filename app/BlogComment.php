@@ -12,4 +12,9 @@ class BlogComment extends Model
         return $this->belongsTo('App\BlogPost');
     }
 
+    public function commentUser()
+    {
+        return $this->belongsTo('App\BlogUser');
+    }
+
 }

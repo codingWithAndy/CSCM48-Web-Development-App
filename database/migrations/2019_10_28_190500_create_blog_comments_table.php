@@ -18,8 +18,10 @@ class CreateBlogCommentsTable extends Migration
             $table->string('comment_for_blog');
             $table->unsignedBigInteger('blog_post_id');
             $table->timestamps();
+            $table->unsignedBigInteger('comment_user_id');
 
             $table->foreign('blog_post_id')->references('id')->on('blog_posts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('comment_user_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -102,14 +102,13 @@ class BlogPostController extends Controller
         $comment = new BlogComment;
 
         $comment->comment_for_blog = $validatedData['content'];
-        $comment->blog_post_id = 60; //need to figute out how to grab current blog post.
-        
-        //Auth::id();
+        $comment->blog_post_id = 2; //need to figute out how to grab current blog post.
+        $comment->comment_user_id = Auth::id();
 
         $comment->save();
 
         session()->flash('message', 'Blog comment was created!');
-        return back(); //need to change this!!
+        return back();
     }
 
     /**

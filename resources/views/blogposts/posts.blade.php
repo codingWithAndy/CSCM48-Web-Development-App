@@ -6,6 +6,7 @@
 @section('content')
     <ul>
         <li>Title: {{$blogpost->blog_title}}</li>
+        by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}
         <li>Content: {{$blogpost->blog_content}}</li>
         
         {{-- Looping through tags and displaying the tag_name --}}
@@ -17,7 +18,7 @@
         <p>Here are the comments baby!!:</p>
         @foreach ($blogpost->blogComments as $comment) 
             <li>Comment: {{$comment->comment_for_blog}}</li>
-            <li>Posted by: {{$comment->blog_post_id}}</li>
+            <li>Posted by: {{$comment->commentuser->first_name}}</li>
         @endforeach
     </ul>
 
@@ -28,4 +29,18 @@
         
     </form>
 
+    {{--
+    <script>
+        let visitCount = document.getElementById('postVisitedCount').value;
+
+        let $formVar = $('form');
+
+        $.ajax({
+            url: $formVar.prop('{{ route('posts.update'), ['id'=>$id]) }}'),
+            method: 'PUT',
+            data: $formVar.serialize()
+        });
+
+    </script>
+--}}
 @endsection

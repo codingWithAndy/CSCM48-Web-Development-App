@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_profile_id');
+
+            $table->foreign('user_profile_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

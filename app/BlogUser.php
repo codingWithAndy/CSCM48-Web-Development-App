@@ -12,4 +12,14 @@ class BlogUser extends Model
         return $this->hasMany('App\BlogPost');
     }
 
+    public function blogComments()
+    {
+        return $this->hasMany('App\BlogComment');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }
