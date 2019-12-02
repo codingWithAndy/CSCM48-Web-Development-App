@@ -7,6 +7,7 @@ use App\BlogPost;
 use App\BlogComment;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Twitter;
+use Illuminate\Support\Facades\Auth;
 
 class BlogPostController extends Controller
 {
@@ -81,13 +82,34 @@ class BlogPostController extends Controller
 
         $post->blog_title = $validatedData['title'];
         $post->blog_content = $validatedData['content'];
-        $post->blog_user_id = '1';
+        $post->blog_user_id = Auth::id();
 
         $post->save();
 
         session()->flash('message', 'Blog post was created!');
         return redirect()->route('blog_post.index');
 
+    }
+
+    public function storeComment(Request $request)
+    {
+        //
+        $validatedData = $request->validate([
+            'content' => 'required|max:255',
+
+        ]);
+
+        $comment = new BlogComment;
+
+        $comment->comment_for_blog = $validatedData['content'];
+        $comment->blog_post_id = 60; //need to figute out how to grab current blog post.
+        
+        //Auth::id();
+
+        $comment->save();
+
+        session()->flash('message', 'Blog comment was created!');
+        return back(); //need to change this!!
     }
 
     /**
