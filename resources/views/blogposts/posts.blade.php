@@ -8,25 +8,25 @@
         <li>Title: {{$blogpost->blog_title}}</li>
         by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}
         <li>Content: {{$blogpost->blog_content}}</li>
-        
+
         {{-- Looping through tags and displaying the tag_name --}}
-        @foreach ($blogpost->blogTags as $tag) 
+        @foreach ($blogpost->blogTags as $tag)
             <li>Tag: {{$tag->tag_name ?? 'None'}}</li>
         @endforeach
     </ul>
     <ul>
         <p>Here are the comments baby!!:</p>
-        @foreach ($blogpost->blogComments as $comment) 
+        @foreach ($blogpost->blogComments as $comment)
             <li>Comment: {{$comment->comment_for_blog}}</li>
             <li>Posted by: {{$comment->commentuser->first_name}}</li>
         @endforeach
     </ul>
 
-    <form method="POST" action="{{ route('blog_post.storeComment') }}">
+    <form method="POST" action="{{ route('blog_comment.store') }}">
         @csrf
         <p>Content: <input type="text" name="content" value="{{ old('content') }}"/></p>
         <input type="submit" value="Submit"/>
-        
+
     </form>
 
     {{--

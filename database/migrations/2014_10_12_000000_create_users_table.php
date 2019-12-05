@@ -22,9 +22,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unsignedBigInteger('user_profile_id');
+            //$table->unsignedBigInteger('user_profile_id');
 
-            $table->foreign('user_profile_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
+            //$table->foreign('user_profile_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
