@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BlogComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\BlogPost;
 
 class BlogCommentController extends Controller
 {
@@ -34,9 +35,10 @@ class BlogCommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $post_id)
     {
         //
+        $post = BlogPost::findOrFail($post_id);
         $validatedData = $request->validate([
             'content' => 'required|max:255',
 
@@ -45,13 +47,15 @@ class BlogCommentController extends Controller
         $comment = new BlogComment;
 
         $comment->comment_for_blog = $validatedData['content'];
-        $comment->blog_post_id = 2; //need to figute out how to grab current blog post.
+        
         $comment->comment_user_id = Auth::id();
 
+        $comment->blogPost()->associate($post); //need to figute out how to grab current blog post.
         $comment->save();
 
         session()->flash('message', 'Blog comment was created!');
-        return back();
+        return redirect()-> route('blog_post.show', $post->id);
+        //return back();
     }
 
     /**

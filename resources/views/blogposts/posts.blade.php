@@ -22,7 +22,7 @@
         @endforeach
     </ul>
 
-    <form method="POST" action="{{ route('blog_comment.store') }}">
+    <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}"> {{-- changed this line--}}
         @csrf
         <p>Content: <input type="text" name="content" value="{{ old('content') }}"/></p>
         <input type="submit" value="Submit"/>
