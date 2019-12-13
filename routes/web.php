@@ -31,6 +31,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('blog_posts', 'BlogPostController@index')->name('blog_post.index');
 Route::get('blog_posts/create', 'BlogPostController@create')->name('blog_post.create')->middleware('auth');
 Route::post('blog_comments/{post_id}', 'BlogCommentController@store')->name('blog_comment.store')->middleware('auth');
+Route::get('blog_commments/{id}', 'BlogCommentController@edit')->name('blog_comment.edit');
+Route::put('blog_comments_edits/{blog_post}', 'BlogCommentController@update')->name('blog_comment.update');
 Route::get('blog_posts/{id}', 'BlogPostController@show')->name('blog_post.show');
 Route::delete('blog_posts/{id}', 'BlogPostController@destroy')->name('blog_post.destroy');
 

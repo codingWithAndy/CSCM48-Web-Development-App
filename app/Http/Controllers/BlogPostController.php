@@ -32,24 +32,6 @@ class BlogPostController extends Controller
         return view('blogposts.posts', ['blogpost' => $blogPost]);
     }
 
-
-    // Trying to add twitter API functionality
-    /*public function tweet(Twitter $t) {
-        $t = app()->make('twitter');
-
-        require "Apptwitteroauth/autoload.php";
-
-        // Connect to the API
-        $connection = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecre);
-        $content = $connection->get("account/verify_credentials");
-
-        // Create a tweet
-        $newStatus = $connection->post("status/update", ["status" => 'This tweet was sent via bloggy blogs']);
-
-        // Get tweets
-        $statuses = $connection->get("status/home_timeline", ["count" => 25, "exclude_replies" => true]);
-    }
-*/
     /**
      * Show the form for creating a new resource.
      *

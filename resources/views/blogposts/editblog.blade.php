@@ -8,13 +8,13 @@
         @csrf
         @method('PUT')
 
-        <label for="title">Title: </label>
-        <input type="text" class="" name="title" value="{{$blogpost->blog_title}}"/>
+        <label style="margion-top:10px" for="title">Title: </label>
+        <textarea class="form-control" rows='3' type="text" class="" name="title" value="">{{$blogpost->blog_title}}</textarea>
 
-        <label for="content">Title: </label>
-        <input type="textarea" class="" name="content" value="{{$blogpost->blog_content}}"/>
+        <label style="margion-top:10px" for="content">Blog content: </label>
+        <textarea class="form-control" rows='3' type="textarea" class="" name="content" value="">{{$blogpost->blog_content}}</textarea>
 
-        <button type="submit" value="Submit">Save Changes</button>
+        <button class="btn btn-success" style="margin:30px 0px" type="submit" value="Submit">Save Changes</button>
         {{--<a href="{{ route('blog_post.index') }}">Cancel</a>--}}
 
 

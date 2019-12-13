@@ -7,16 +7,13 @@
         @csrf
 
         <label for="title">Title: </label><br>
-        <input type="text" class="" name="title" value="{{ old('title') }}"/>
+        <textarea type="text" class="form-control" name="title" value="{{ old('title') }}" placeholder="Enter title here...."></textarea>
 
         <br>
 
-        <label for="content">Content: </label> <br>
-        <input type="textarea" class="" name="content" value="{{ old('content') }}"/>
+        <p>Please selcet up to 3 Tags:</p>
+        <select name="tags[]" class="form-control" multiple="multiple">
 
-        <br>
-
-        <select name="tags[]" multiple="multiple">
             @foreach($tags as $tag)
             <option value="{{ $tag->id }}">
                 @if ($tag->id == old('tag_id'))
@@ -28,12 +25,18 @@
         </select>
         <br>
 
-        <label for="featured_image">Upload Featured Image: </label><br>
-        <input type="file" name="featured_image" id="featured_image">
+        <label for="content">Content: </label> <br>
+        <textarea type="textarea" class="form-control" name="content" value="{{ old('content') }}" placeholder="Enter blog here...."></textarea>
 
         <br>
-        <input type="submit" value="Submit"/>
-        <a href="{{ route('blog_post.index') }}">Cancel</a>
+
+
+        <label for="featured_image">Upload Featured Image: </label><br>
+        <input class="btn btn-success" style="margin-top:10px" type="file" name="featured_image" id="featured_image">
+
+        <br>
+        <input class="btn btn-primary" style="margin:10px 20px 30px 20px" type="submit" value="Submit"/>
+        <a class="btn btn-danger" style="margin:10px 20px 30px 20px"  href="{{ route('blog_post.index') }}">Cancel</a>
 
 
     </form>

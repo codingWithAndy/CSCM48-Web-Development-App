@@ -14,9 +14,9 @@ class BlogCommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($post)
     {
-        //
+        return response()->json($post->blogComments()->with('user')->latest()->get());
     }
 
     /**
@@ -47,12 +47,13 @@ class BlogCommentController extends Controller
         $comment = new BlogComment;
 
         $comment->comment_for_blog = $validatedData['content'];
-        
         $comment->comment_user_id = Auth::id();
-
+        //$comment->blog_post_id = $post->id;
         $comment->blogPost()->associate($post); //need to figute out how to grab current blog post.
         $comment->save();
 
+
+        //return $comment->toJson();
         session()->flash('message', 'Blog comment was created!');
         return redirect()-> route('blog_post.show', $post->id);
         //return back();
@@ -78,6 +79,9 @@ class BlogCommentController extends Controller
     public function edit($id)
     {
         //
+        $comment = BlogComment::findOrFail($id);
+
+        return view('blogposts.editcomment', ['comment' => $comment]);
     }
 
     /**
@@ -90,6 +94,20 @@ class BlogCommentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $comment = BlogComment::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'comment' => 'required',
+
+        ]);
+
+
+        $comment->comment_for_blog = $request->get('comment');
+
+        $comment->save();
+
+        session()->flash('message', 'Comment was editted!');
+        return redirect()->route('home');
     }
 
     /**

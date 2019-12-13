@@ -21,26 +21,28 @@
                     display all the user details here!!!!
 
                     <p>The Blog Posts:</p>
-                    <ul>
+                    <ol>
                         @foreach ($blogposts as $blogPost)
                             @if ($blogPost->blog_user_id == Auth::id())
-                                <li>Title: <a href="{{ route('blog_post.show',$blogPost->id)}}">{{ $blogPost->blog_title}}</a><a href="blog_posts_edit/{{$blogPost->id}}"> edit</a> {{--"http://blogsite.test/blog_posts/{{$blogPost->id}}"> {{ route('blog_post.edit', $blogPost->id)}}  --}}
-                                <li>comment count: {{ $blogPost->blogComments()->count() }}</li>
+                                <li>Title: <a href="{{ route('blog_post.show',$blogPost->id)}}">{{ $blogPost->blog_title}}</a> <br>{{--"http://blogsite.test/blog_posts/{{$blogPost->id}}"> {{ route('blog_post.edit', $blogPost->id)}}  --}}
+                                comment count: {{ $blogPost->blogComments()->count() }}</li>
+
                                 <form method="POST"
                                 action="{{route('blog_post.destroy', $blogPost->id)}}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">Delete</button> 
+                                <a href="blog_posts_edit/{{$blogPost->id}}" class="btn btn-warning" style="margin:10px 5px"> Edit</a>
+                                <button class="btn btn-danger" style="margin:10px 5px" type="submit">Delete</button>
                                 </form>
                                 </li>
                             @endif
                         @endforeach
 
-                    </ul>
+                    </ol>
 
                     {{-- {{$blogposts->links()}} --}}
 
-                    <a href="{{ route('blog_post.create') }}">Create a blog post!</a>
+                    <a class="btn btn-success" style="margin:10px 5px" href="{{ route('blog_post.create') }}">Create a blog post!</a>
                 </div>
             </div>
         </div>
