@@ -68,7 +68,7 @@ class BlogPostController extends Controller
         $post->blog_title = $validatedData['title'];
         $post->blog_content = $validatedData['content'];
         $post->blog_user_id = auth()->user()->id; //Auth::id();
-        
+
         //save image
         if ($request->hasFile('featured_image')){
             $image = $request->file('featured_image');

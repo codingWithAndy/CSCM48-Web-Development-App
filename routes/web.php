@@ -20,13 +20,20 @@
 
 //Route::get('exampleroute', 'BlogPostController@tweet');
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
+
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('bloguser', 'BlogUserController@create')->name('bloguser.create');
+Route::get('blog_posts', 'BlogPostController@index')->name('blog_post.index');
 
 Route::get('blog_posts', 'BlogPostController@index')->name('blog_post.index');
 Route::get('blog_posts/create', 'BlogPostController@create')->name('blog_post.create')->middleware('auth');
