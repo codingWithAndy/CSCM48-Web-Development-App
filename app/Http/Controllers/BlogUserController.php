@@ -29,13 +29,14 @@ class BlogUserController extends Controller
         //
         //dd(auth()->user());
         $authenticated = User::findOrFail(auth()->user()->id);
-        //$authenticated->bloguser_id = auth()->user()->id;
+        $authenticated->bloguser_id = auth()->user()->id;
 
+        $authenticated->save();
         $bloguser = new BlogUser;
 
         $bloguser->first_name = auth()->user()->name;
         $bloguser->surname = auth()->user()->surname;
-        //$bloguser->user_id = auth()->user()->id;
+        $bloguser->user_id = auth()->user()->id;
 
         $bloguser->save();
 

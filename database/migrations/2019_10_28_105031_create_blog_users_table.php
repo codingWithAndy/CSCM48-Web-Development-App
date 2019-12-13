@@ -20,8 +20,7 @@ class CreateBlogUsersTable extends Migration
             $table->dateTime('date_of_birth')->nullable();
             $table->timestamps();
 
-            //$table->unsignedBigInteger('user_id')->unsigned();
-
+            $table->unsignedBigInteger('user_id');
             //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

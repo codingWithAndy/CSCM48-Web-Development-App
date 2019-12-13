@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            //$table->unsignedBigInteger('bloguser_id');
+            $table->bigInteger('bloguser_id')->nullable();
 
             //$table->foreign('bloguser_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
         });

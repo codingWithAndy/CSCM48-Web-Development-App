@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function userProfile()
     {
-        return $this->belongsTo('App\BlogUser');
+        return $this->belongsTo('App\BlogUser', 'id');
     }
 }
