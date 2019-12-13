@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Welcome Home! ..... Time to write?')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -22,9 +24,9 @@
                     <ul>
                         @foreach ($blogposts as $blogPost)
                             @if ($blogPost->blog_user_id == Auth::id())
-                    <li>Title: <a href="{{ route('blog_post.show',$blogPost->id)}}">{{ $blogPost->blog_title}}</a><a href="blog_posts_edit/{{$blogPost->id}}"> edit</a> {{--"http://blogsite.test/blog_posts/{{$blogPost->id}}"> {{ route('blog_post.edit', $blogPost->id)}}  --}}
+                                <li>Title: <a href="{{ route('blog_post.show',$blogPost->id)}}">{{ $blogPost->blog_title}}</a><a href="blog_posts_edit/{{$blogPost->id}}"> edit</a> {{--"http://blogsite.test/blog_posts/{{$blogPost->id}}"> {{ route('blog_post.edit', $blogPost->id)}}  --}}
                                 <li>comment count: {{ $blogPost->blogComments()->count() }}</li>
-                                    <form method="POST"
+                                <form method="POST"
                                 action="{{route('blog_post.destroy', $blogPost->id)}}">
                                 @csrf
                                 @method('DELETE')

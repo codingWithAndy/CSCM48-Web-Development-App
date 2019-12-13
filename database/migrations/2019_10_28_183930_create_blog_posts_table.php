@@ -20,6 +20,7 @@ class CreateBlogPostsTable extends Migration
             $table->unsignedBigInteger('blog_user_id');
             $table->integer('page_view')->default(0);
             $table->timestamps();
+            $table->string('image')->nullable();
 
             $table->foreign('blog_user_id')->references('id')->on('blog_users')->onDelete('cascade')->onUpdate('cascade');
         });

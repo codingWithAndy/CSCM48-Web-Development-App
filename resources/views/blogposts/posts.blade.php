@@ -4,21 +4,57 @@
 @section('title', 'Blog Post')
 
 @section('content')
-    <ul>
-        <li>Title: {{$blogpost->blog_title}}</li>
-        by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}
-        <li>Content: {{$blogpost->blog_content}}</li>
 
-        {{-- Looping through tags and displaying the tag_name --}}
-        @foreach ($blogpost->blogTags as $tag)
-            <li>Tag: {{$tag->tag_name ?? 'None'}}</li>
-        @endforeach
-    </ul>
+    <div class="row">
+        <div class="col-md-8">
+            @if ($blogpost->image != null)
+                <img src="{{ asset('images/' . $blogpost->image)}}" height="400" width="800"><br>
+            @endif
+            <h2>{{$blogpost->blog_title}}</h2>
+            <label>by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}</label><br>
+            <label>Content: </label><br>
+            <p>
+                {{$blogpost->blog_content}}
+            </p>
+        </div>
+
+
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <ul>
+                {{-- Looping through tags and displaying the tag_name --}}
+                 @foreach ($blogpost->blogTags as $tag)
+                      <label>Tag: {{$tag->tag_name ?? 'None'}}</label><br>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    
+    
+    @if ($blogpost->blog_user_id == auth()->user()->id)
+        <form action="{{route('blog_post.edit', $blogpost->id)}}">
+            @csrf
+            <button>Edit blog.</button>
+        </form>
+        
+    @endif
+    
     <ul>
-        <p>Here are the comments baby!!:</p>
+        <div class="card-header"><h3>Comments:</h3></div>
+        
         @foreach ($blogpost->blogComments as $comment)
-            <li>Comment: {{$comment->comment_for_blog}}</li>
-            <li>Posted by: {{$comment->commentuser->first_name}}</li>
+            <div class="card-body">
+                <label>Comment: {{$comment->comment_for_blog}}</label><br>
+                <label>Posted by: {{$comment->commentuser->first_name}}</label><br>
+                @if ($comment->commentuser->id == auth()->user()->id)
+                     <button>edit comment</button><br>
+                @endif
+
+            </div>
+            
         @endforeach
     </ul>
 

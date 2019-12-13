@@ -4,28 +4,21 @@
 
 @section('content')
 
-    <form method="PUT" action=" route('blog_post.update', $blogpost->id)">
-        @csrf
-        {{--@method('PUT')--}}
+    <form method="POST" action=" {{route('blog_post.update', $blogpost->id)}}">
+        @csrf
+        @method('PUT')
 
-        <p>Title: <input type="text" name="title" value="{{ $blogpost->blog_title }}"/></p>
-        <p>Content: <input type="text" name="content" value="{{ $blogpost->blog_content}}"/></p>
-        @php
-            $i = 1   
-        @endphp
-        @foreach ($blogpost->blogTags as $tag)
+        <label for="title">Title: </label>
+        <input type="text" class="" name="title" value="{{$blogpost->blog_title}}"/>
 
-            <p>Tag {{$i}}: <input type="text" name="tag[{{$i}}]]" value="{{$tag->tag_name ?? 'None'}}"/></p>
-            @php
-                $i = $i + 1   
-            @endphp
-        @endforeach
-        
-        <input type="submit" value="Submit"/>
-        {{--<a href="{{ route('blog_post.index') }}">Cancel</a>--}}
+        <label for="content">Title: </label>
+        <input type="textarea" class="" name="content" value="{{$blogpost->blog_content}}"/>
+
+        <button type="submit" value="Submit">Save Changes</button>
+        {{--<a href="{{ route('blog_post.index') }}">Cancel</a>--}}
 
 
-    </form>
+    </form>
 
 @endsection
 

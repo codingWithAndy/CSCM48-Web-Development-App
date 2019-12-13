@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\BlogUser;
 
 class RegisterController extends Controller
 {
@@ -68,5 +69,16 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        //$user = New BlogUser;
+        
+        //$user->first_name = 'name';
+        //$user->surname = 'name';
+        //$user->user_profile_id = auth()->user()->id;
+
+        //$user->save();
+
+
+
     }
 }

@@ -34,9 +34,10 @@ Route::post('blog_comments/{post_id}', 'BlogCommentController@store')->name('blo
 Route::get('blog_posts/{id}', 'BlogPostController@show')->name('blog_post.show');
 Route::delete('blog_posts/{id}', 'BlogPostController@destroy')->name('blog_post.destroy');
 
-Route::get('blog_posts_edit/{blog_post}', 'BlogPostController@edit')->name('blog_post.edit'); //this is trying to edit the blog might have conflict of name.
+Route::get('blog_posts_edit/{blog_post}', 'BlogPostController@edit')->name('blog_post.edit'); // ->middleware('checkauthor') this is trying to edit the blog might have conflict of name.
 Route::put('blog_posts_edits/{blog_post}', 'BlogPostController@update')->name('blog_post.update');
 Route::post('blog_posts', 'BlogPostController@store')->name('blog_post.store')->middleware('auth');
+
 
 
 

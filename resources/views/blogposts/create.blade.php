@@ -3,11 +3,19 @@
 @section('title', 'Create a Post')
 
 @section('content')
-    <form method="POST" action="{{ route('blog_post.store') }}">
+    <form method="POST" action="{{ route('blog_post.store') }}" enctype="multipart/form-data">
         @csrf
 
-    <p>Title: <input type="text" name="title" value="{{ old('title') }}"/></p>
-        <p>Content: <input type="text" name="content" value="{{ old('content') }}"/></p>
+        <label for="title">Title: </label><br>
+        <input type="text" class="" name="title" value="{{ old('title') }}"/>
+
+        <br>
+
+        <label for="content">Content: </label> <br>
+        <input type="textarea" class="" name="content" value="{{ old('content') }}"/>
+
+        <br>
+
         <select name="tags[]" multiple="multiple">
             @foreach($tags as $tag)
             <option value="{{ $tag->id }}">
@@ -18,8 +26,12 @@
             </option>
             @endforeach
         </select>
+        <br>
 
-        
+        <label for="featured_image">Upload Featured Image: </label><br>
+        <input type="file" name="featured_image" id="featured_image">
+
+        <br>
         <input type="submit" value="Submit"/>
         <a href="{{ route('blog_post.index') }}">Cancel</a>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\BlogPost;
 use App\BlogComment;
 use App\Tag;
+use Image;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -85,17 +86,20 @@ class BlogPostController extends Controller
         $post->blog_title = $validatedData['title'];
         $post->blog_content = $validatedData['content'];
         $post->blog_user_id = auth()->user()->id; //Auth::id();
-        //$post->blogTags()->attach([$post->id, $validatedData['tag1']]);
-        //$post->blogTags()->attach([$post->id, $validatedData['tag2']]);
-        //$post->blogTags()->attach([$post->id, $validatedData['tag3']]);
         
-        //$post->blogtags->tag_id =  $validatedData['tag3'];
+        //save image
+        if ($request->hasFile('featured_image')){
+            $image = $request->file('featured_image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+            Image::make($image)->resize(800,400)->save($location);
+
+            $post->image = $filename;
+        }
 
         $post->save();
 
         $post->blogTags()->sync($request->tags, false);
-
-
 
         session()->flash('message', 'Blog post was created!');
         return redirect()->route('blog_post.index');
@@ -122,8 +126,6 @@ class BlogPostController extends Controller
         $blogPost = BlogPost::findOrFail($id);
         $tags = Tag::all();
 
-        
-
         return view('blogposts.editblog', ['blogpost' => $blogPost, 'tags' => $tags]);
     }
 
@@ -149,16 +151,13 @@ class BlogPostController extends Controller
 
         ]);
 
-
-
-        $post->blog_title = $validatedData['title'];
-        $post->blog_content = $validatedData['content'];
+        $post->blog_title = $request->get('title');
+        $post->blog_content = $request->get('content');
 
         $post->save();
- 
-        return view('blog_post.index', ['blogpost' => $blogPosts]);
 
-
+        session()->flash('message', 'Blog post was editted!');
+        return redirect()->route('home');
 
     }
 
