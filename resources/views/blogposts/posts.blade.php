@@ -9,47 +9,44 @@
     <div class="card text-center">
         <div class="card-header">
             <h2>{{$blogpost->blog_title}}</h2>
-    <label>by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}</label><br>
-    @if ($blogpost->image != null)
-            <img src="{{ asset('images/' . $blogpost->image)}}" height="300" width="600"><br>
-     @endif
-    <ul>
-        Tag(s):
+            <label>by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}</label><br>
+            @if ($blogpost->image != null)
+                <img src="{{ asset('images/' . $blogpost->image)}}" height="300" width="600"><br>
+            @endif
+            <ul>
+                Tag(s):
                 {{-- Looping through tags and displaying the tag_name --}}
                  @foreach ($blogpost->blogTags as $tag)
                       <label>{{$tag->tag_name ?? 'None'}}, </label>
                 @endforeach
-    </ul>
+            </ul>
         </div>
         <div class="card-body">
                 <hr>
-        <label>Content: </label><br>
-        <p class="lead">
-            {{$blogpost->blog_content}}
-        </p>
+            <label>Content: </label><br>
+            <p class="lead">
+                {{$blogpost->blog_content}}
+            </p>
+        </div>
+
+        <div class="card-footer text-muted">
+            @if (Auth::check() != null)
+
+                @if ($blogpost->blog_user_id == auth()->user()->id)
+                    <form action="{{route('blog_post.edit', $blogpost->id)}}">
+                        @csrf
+                        <button class="btn btn-success">Edit Blog</button>
+                    </form>
+
+                @endif
+            @endif
+        </div>
     </div>
-
-    <div class="card-footer text-muted">
-         @if (Auth::check() != null)
-
-      @if ($blogpost->blog_user_id == auth()->user()->id)
-        <form action="{{route('blog_post.edit', $blogpost->id)}}">
-            @csrf
-            <button class="btn btn-success">Edit Blog</button>
-        </form>
-
-    @endif
-@endif
-    </div>
-</div>
 
     <h3>Comments:</h3>
 
     @foreach ($blogpost->blogComments as $comment)
-    <div class="media" style="margin-top:20px;">
-
-
-
+        <div class="media" style="margin-top:20px;">
             <div class="media-body">
                 <div class="card">
                     <div class="card-header">
@@ -59,37 +56,38 @@
                         <h5 class="card-title">{{$comment->commentuser->first_name}}'s comment is.....</h5>
                         <p class="card-text">{{$comment->comment_for_blog}}</p>
                         <div class="media-right">
-                @if (Auth::check() != null)
-                @if ($comment->commentuser->id == auth()->user()->id)
-                    <form action="{{ route('blog_comment.edit', $comment->id)}}">
-                        @csrf
+                            @if (Auth::check() != null)
+                                @if ($comment->commentuser->id == auth()->user()->id)
+                                    <form action="{{ route('blog_comment.edit', $comment->id)}}">
+                                        @csrf
+                                        <button class="btn btn-success">Edit Comment</button>
+                                    </form>
 
-                        <button class="btn btn-success">Edit Comment</button>
-                    </form>
-
-                @endif
-@endif
+                                @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
-
-            </div>
-
-
             </div>
             <br>
-
-    </div>
+        </div>
     @endforeach
 
-<div style="margin:50px 0px">
-    <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">
-        @csrf
-        <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" ></textarea> {{--v-model="commentBox"--}}
-        <button class="btn btn-success" style="margin-top:10px" type="submit" value="Submit">Save Comment</button>
+    <div style="margin:50px 0px">
+        @if (Auth::check() != null)
+            @if ($blogpost->blog_user_id == auth()->user()->id)
+                <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">
+                    @csrf
+                    <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" ></textarea> {{--v-model="commentBox"--}}
+                    <button class="btn btn-success" style="margin-top:10px" type="submit" value="Submit">Save Comment</button>
+                </form>
+            @endif
+        @endif
 
-    </form>
+    </div>
+
 </div>
-</div>
+
 @endsection
 {{--
 @section('scripts')

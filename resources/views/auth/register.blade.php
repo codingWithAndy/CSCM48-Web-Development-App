@@ -80,6 +80,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+                                <a href="{{ url('/redirect') }}" class="btn btn-danger"><i class="fab fa-google"></i> Login With Google</a>
 
                                 {{-- Add google signin here. --}}
 
