@@ -2,7 +2,7 @@
 
 
 
-class GoogleProvider
+/*class GoogleProvider
 {
 
     $private $googleDetails
@@ -13,3 +13,4 @@ class GoogleProvider
     }
 
 }
+*/

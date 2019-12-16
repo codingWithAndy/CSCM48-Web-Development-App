@@ -105,8 +105,11 @@ class BlogPostController extends Controller
     {
         //
 
+
         $blogPost = BlogPost::findOrFail($id);
         $tags = Tag::all();
+
+        //$this->authorize('can:update', $blogPost);
 
         return view('blogposts.editblog', ['blogpost' => $blogPost, 'tags' => $tags]);
     }

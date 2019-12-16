@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Google;
+use App;
 Use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 Use Exception;
@@ -18,12 +20,18 @@ class SocialAuthGoogleController extends Controller
 
     public function callback()
     {
+
         try {
 
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            $googleUser = Socialite::driver('google')->user();
+            //$GU = Socialite::driver('google')->user();
+            //$googleUser = Socialite::driver('google')->user(); //->stateless() { Might be able to stick this behind a singleton function}
+
+
+
+            //dd($googleuser);
+
             $existUser = User::where('email', $googleUser->email)->first();
-
-
 
             if ($existUser) {
 
@@ -41,6 +49,7 @@ class SocialAuthGoogleController extends Controller
 
                 $user->save();
 
+                //$token = app()->make('App\Google', $user->token);
                 Auth::loginUsingId($user->id, true);
                 return redirect()->route('bloguser.create');
 

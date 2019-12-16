@@ -75,13 +75,13 @@
 
     <div style="margin:50px 0px">
         @if (Auth::check() != null)
-            @if ($blogpost->blog_user_id == auth()->user()->id)
+            {{--@if ($blogpost->blog_user_id == auth()->user()->id)--}}
                 <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">
                     @csrf
                     <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" ></textarea> {{--v-model="commentBox"--}}
                     <button class="btn btn-success" style="margin-top:10px" type="submit" value="Submit">Save Comment</button>
                 </form>
-            @endif
+            {{--@endif--}}
         @endif
 
     </div>

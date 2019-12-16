@@ -1,5 +1,6 @@
 <?php
 
+use App\Google;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,16 +12,10 @@
 |
 */
 
-//use App\Twitter;
+//app()->singleton('App\Google', function ($app) {
 
-//app()->singleton('App\Twitter', function ($app){
-//    return new Twitter();
-
+    //return new Google($GU);
 //});
-
-//Route::get('exampleroute', 'BlogPostController@tweet');
-
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,7 +39,7 @@ Route::put('blog_comments_edits/{blog_post}', 'BlogCommentController@update')->n
 Route::get('blog_posts/{id}', 'BlogPostController@show')->name('blog_post.show');
 Route::delete('blog_posts/{id}', 'BlogPostController@destroy')->name('blog_post.destroy');
 
-Route::get('blog_posts_edit/{blog_post}', 'BlogPostController@edit')->name('blog_post.edit'); // ->middleware('checkauthor') this is trying to edit the blog might have conflict of name.
+Route::get('blog_posts_edit/{blog_post}', 'BlogPostController@edit')->name('blog_post.edit'); // ->middleware('can:update, blog_post') ->middleware('checkauthor') this is trying to edit the blog might have conflict of name.
 Route::put('blog_posts_edits/{blog_post}', 'BlogPostController@update')->name('blog_post.update');
 Route::post('blog_posts', 'BlogPostController@store')->name('blog_post.store')->middleware('auth');
 
