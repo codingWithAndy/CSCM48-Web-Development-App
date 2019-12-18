@@ -13,14 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('posts/{post}/comments', 'BlogCommentController@index');
+Route::get('posts/{post}/comments', 'BlogCommentController@apiIndex')->name('api.comments.index');
+Route::post('posts/{post}/comment', 'BlogCommentController@apiStore')->name('api.comment.store');
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('posts/{post}/comment', 'BlogCommentController@store');
+
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// }); -> was here but not in tutorial followed.
 
 

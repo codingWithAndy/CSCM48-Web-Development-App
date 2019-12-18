@@ -24,18 +24,13 @@ class SocialAuthGoogleController extends Controller
         try {
 
             $googleUser = Socialite::driver('google')->user();
-            //$GU = Socialite::driver('google')->user();
-            //$googleUser = Socialite::driver('google')->user(); //->stateless() { Might be able to stick this behind a singleton function}
-
-
-
-            //dd($googleuser);
-
             $existUser = User::where('email', $googleUser->email)->first();
 
             if ($existUser) {
 
                 Auth::loginUsingId($existUser->id, true);
+                $g = app()->make('google');
+                //d($g);
                 return redirect()->route('home');
 
             } else {
@@ -49,8 +44,9 @@ class SocialAuthGoogleController extends Controller
 
                 $user->save();
 
-                //$token = app()->make('App\Google', $user->token);
                 Auth::loginUsingId($user->id, true);
+                $g = app()->make('google');
+                //d($g);
                 return redirect()->route('bloguser.create');
 
             }
@@ -61,9 +57,3 @@ class SocialAuthGoogleController extends Controller
         }
     }
 }
-
-/*
-'name' => $data['name'],
-            'surname' => $data['surname'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),

@@ -14,8 +14,9 @@ class BlogCommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($post)
+    public function index(BlogPost $post)
     {
+        dd($post->blogComments()->with('user')->latest()->get());
         return response()->json($post->blogComments()->with('user')->latest()->get());
     }
 
@@ -29,15 +30,46 @@ class BlogCommentController extends Controller
         //
     }
 
+    // Ajax Index Call
+    public function apiIndex(BlogPost $post)
+    {
+        $comment = BlogComment::where('blog_post_id', $post->id);
+        //dd($post->blogComments()->with('user')->latest()->get());
+        return response()->json($comment);
+
+    }
+
+    // Ajax Save Call
+    public function apiStore(Request $request, BlogPost $post)
+    {
+        dd($request);
+        $validatedData = $request->validate([
+            'content' => 'required|max:255',
+
+        ]);
+
+        $comment = new BlogComment;
+        $comment->comment_for_blog = $validatedData['content'];
+        $comment->comment_user_id = Auth::id();
+        $comment->blogPost()->associate($post);
+        $comment->save();
+
+        $comment = BlogComment::where('id', $comment->id)->with('user')->first();
+        return $comment->toJson();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $post_id)
+    public function store(Request $request) //, $post_id
     {
         //
+        $post_id = $request->route()->parameters();
+        $post_id = $post_id['post_id'];
+
         $post = BlogPost::findOrFail($post_id);
         $validatedData = $request->validate([
             'content' => 'required|max:255',
@@ -48,15 +80,11 @@ class BlogCommentController extends Controller
 
         $comment->comment_for_blog = $validatedData['content'];
         $comment->comment_user_id = Auth::id();
-        //$comment->blog_post_id = $post->id;
-        $comment->blogPost()->associate($post); //need to figute out how to grab current blog post.
+        $comment->blogPost()->associate($post);
         $comment->save();
 
-
-        //return $comment->toJson();
         session()->flash('message', 'Blog comment was created!');
-        return redirect()-> route('blog_post.show', $post->id);
-        //return back();
+        return back();
     }
 
     /**

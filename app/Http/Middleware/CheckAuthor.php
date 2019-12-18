@@ -17,21 +17,24 @@ class CheckAuthor
      */
     public function handle($request, Closure $next)
     {
-        //dd($request->id);
-        $blogpost = BlogPost::findOrFail($id);
-        $blogAuthor = $request->blog_user_id;
-        dd($$blogAuthor);
+
+        $idCheck = $request->route()->parameters();
+        $idCheck = $idCheck['blog_post'];
+        $blogpost = BlogPost::findOrFail($idCheck); // ->toArray();
+        //dd($idCheck, $request->route()->parameters(), $request->route(), $blogpost->blog_user_id);
+        $blogAuthor = $blogpost->blog_user_id;
+        //dd($$blogAuthor);
 
 
         if($blogAuthor == auth()->user()->id){
             return $next($request);
 
         } else {
-            dd($blogAuthor, auth()->user()->id);
+            //dd($blogAuthor, auth()->user()->id);
             return response("You did not create this blog!");
         }
 
 
-        
+
     }
 }

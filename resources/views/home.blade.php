@@ -27,8 +27,7 @@
                                 <li>Title: <a href="{{ route('blog_post.show',$blogPost->id)}}">{{ $blogPost->blog_title}}</a> <br>{{--"http://blogsite.test/blog_posts/{{$blogPost->id}}"> {{ route('blog_post.edit', $blogPost->id)}}  --}}
                                 comment count: {{ $blogPost->blogComments()->count() }}</li>
 
-                                <form method="POST"
-                                action="{{route('blog_post.destroy', $blogPost->id)}}">
+                                <form method="POST" action="{{route('blog_post.destroy', $blogPost->id)}}">
                                 @csrf
                                 @method('DELETE')
                                 <a href="blog_posts_edit/{{$blogPost->id}}" class="btn btn-warning" style="margin:10px 5px"> Edit</a>

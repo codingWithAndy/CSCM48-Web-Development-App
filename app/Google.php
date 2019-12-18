@@ -10,20 +10,12 @@ use Exception;
 class Google
 {
 
-    private $googleUser;
+    private $googleUserID;
 
-    public function __construct($token)
+    public function __construct($id)
     {
-
-        //$this->$token = ;
-        //dd($googleUser);
+        $this->googleUserID = $id; //Auth::id();
+        //dd($this->googleUserID, $id);
     }
-
-
-    //$googleUser = Socialite::driver('google')->user(); //->stateless() { Might be able to stick this behind a singleton function}
-    //$existUser = User::where('email', $googleUser->email)->first();
-
-
-
 
 }

@@ -12,6 +12,6 @@ $factory->define(BlogUser::class, function (Faker $faker) {
         'surname' => $faker->lastName(),
         'date_of_birth' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'user_id' => App\User::inRandomOrder()->first()->id,
-        //'user_profile_id' => App\BlogUser::id() //this has been changed.
+
     ];
 });

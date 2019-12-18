@@ -56,8 +56,9 @@ class PostPolicy
     public function update(BlogUser $user, BlogPost $blogPost)
     {
         //
-        dd($user, $blogPost);
+        //dd($user, $blogPost);
         return Auth::check() === $blogPost->blog_user_id;
+
     }
 
     /**
