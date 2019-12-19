@@ -55,7 +55,7 @@ class BlogCommentController extends Controller
         $comment->save();
 
         $comment = BlogComment::where('id', $comment->id)->with('user')->first();
-        return $comment->toJson();
+        return response()->json(['comment' => $comment]);
     }
 
     /**

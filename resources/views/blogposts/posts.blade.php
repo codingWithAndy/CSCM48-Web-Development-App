@@ -12,9 +12,9 @@
     <div class="card text-center">
         <div class="card-header">
             <h2>{{$blogpost->blog_title}}</h2>
-            <label>by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}}</label><br>
+        <label>by: {{$blogpost->blogUser->first_name}} {{$blogpost->blogUser->surname}} <br/> ID: {{ $bloguser->user->id }}</label><br/>
             @if ($blogpost->image != null)
-                <img src="{{ asset('images/' . $blogpost->image)}}" height="300" width="600"><br>
+                <img src="{{ asset('images/' . $blogpost->image)}}" height="300" width="600"/><br/>
             @endif
             <ul>
                 Tag(s):
@@ -32,32 +32,32 @@
             </p>
         </div>
 
+        {{-- Checking if the author is logged in the be able to edit post --}}
         <div class="card-footer text-muted">
             @if (Auth::check() != null)
-
                 @if ($blogpost->blog_user_id == auth()->user()->id)
                     <form action="{{route('blog_post.edit', $blogpost->id)}}">
                         @csrf
                         <button class="btn btn-success">Edit Blog</button>
                     </form>
-
                 @endif
             @endif
         </div>
     </div>
-{{-- Original Comments --}}
+{{-- Display Comments --}}
 <div>
     @foreach ($blogpost->blogComments as $comment)
         <div class="media" style="margin-top:20px;">
             <div class="media-body">
                 <div class="card">
                     <div class="card-header">
-                        <label>Posted by: {{$comment->commentuser->first_name}}</label><br>
+                        <label>Posted by: {{$comment->commentuser->first_name}} {{$comment->commentuser->surname}}</label><br>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{$comment->commentuser->first_name}}'s comment is.....</h5>
                         <p class="card-text">{{$comment->comment_for_blog}}</p>
                         <div class="media-right">
+                            {{-- Auth check to see if comment author is logged in to edit.--}}
                             @if (Auth::check() != null)
                                 @if ($comment->commentuser->id == auth()->user()->id)
                                     <form action="{{ route('blog_comment.edit', $comment->id)}}">
@@ -68,103 +68,26 @@
                             @endif
                         </div>
                     </div>
-                            <br>
+                    <br>
                 </div>
             </div>
         </div>
     @endforeach
 </div>
-    <div style="margin:50px 0px">
+    {{-- Create comment area and store button --}}
+    <div style="margin:50px 0px" id="root">
         @if (Auth::check() != null)
-            {{--@if ($blogpost->blog_user_id == auth()->user()->id)--}}
-                <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">
-                    @csrf
-                    <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" ></textarea> {{--v-model="commentBox"--}}
-                    <button class="btn btn-success" style="margin-top:10px" type="submit" value="Submit">Save Comment</button>
-                </form>
-            {{--@endif--}}
+            <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">
+                @csrf
+                <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" v-model="commentBox"></textarea> {{--v-model="commentBox"--}}
+                <button class="btn btn-success" style="margin-top:10px" type="submit" value="Submit">Save Comment</button>
+            </form>
+        @else
+            {{-- Display if user is not logged in. --}}
+            <h4>You must be logged in to submit a comment!</h4> <a href="/login">Login Now >></a>
         @endif
 
     </div>
-
-    {{-- Ajax attempt--}}
-
-    <h3>Comments:</h3>
-    <div id="root">
-
-        <div style="margin-bottom:50px;" v-if="user">
-            <textarea class="form-control" rows="3" name="content" placeholder="Leave a comment" v-model="commentBox"></textarea>
-            <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment">Save Comment</button>
-        </div>
-
-        <div v-else>
-            <h4>You must be logged in to submit a comment!</h4> <a href="/login">Login Now >></a>
-        </div>
-        <div class="media" style="margin-top:20px;" v-for="comment in comments">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object" src="http://placeimg.com/80/80" alt="...">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">@{{post}} said...</h4>
-                <p>
-                @{{comment.body}}
-                </p>
-                <span style="color: #aaa;">on @{{comment.created_at}}</span>
-            </div>
-        </div>
-    </div>
-
-    {{--<div id="root">
-        <div class="media" style="margin-top:20px;" v-for="comment in comments">
-                <div class="media-body">
-                    <div class="card">
-                        <div class="card-header">
-                            <label>Posted by: @{{comment.name}}</label><br>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@{{comment.name}}'s comment is.....</h5>
-                        <p class="card-text">@{{comment.comment}}</p>
-                        <textarea class="form-control" rows='3' placeholder="Leave a comment...." id="content" type="text" name="content" v-model="newComment"></textarea> {{--v-model="commentBox"
-                        <button class="btn btn-success update_button" style="margin-top:10px" @click="createComment">Save Comment</button>
-                        <div v-else>
-                            <h4>You must be logged in to submit a comment!</h4> <a href="/login">Login Now >></a>
-
-                            <div class="media-right">
-                                {{--@if (Auth::check() != null)
-                                    @if ($blogpost->blogComments()->commentuser->first_name == auth()->user()->id)
-                                        <form action="{{ route('blog_comment.edit', $comment->id)}}">
-                                            @csrf
-                                            <button class="btn btn-success">Edit Comment</button>
-                                        </form>
-
-                                   {{-- @endif
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-
-            {{-- Create a new blog comments !!!! --}
-        <div style="margin:50px 0px" v-if="user">
-            {{--@if (Auth::check() != null)--}}
-                {{--@if ($blogpost->blog_user_id == auth()->user()->id)--}}
-                    {{--<form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">--}}
-                        {{--@csrf--}
-                        <textarea class="form-control" rows='3' placeholder="Leave a comment...." id="content" type="text" name="content" v-model="newComment"></textarea> {{--v-model="commentBox"--}
-                        <button class="btn btn-success update_button" style="margin-top:10px" @click="createComment">Save Comment</button>
-                        <div v-else>
-                            <h4>You must be logged in to submit a comment!</h4> <a href="/login">Login Now >></a>
-                        </div>
-                    </form>
-                {{--@endif
-            @endif--}
-
-        </div>
-    </div>--}}
 </div>
 
 @endsection
@@ -187,7 +110,7 @@
             getComments() {
                 axios.get('/api/posts/' + this.post.id + '/comments')
                      .then((response) => {
-                         this.comments = response.data
+                         this.comments = response.data.comment
                      })
                      .catch(function (error) {
                          console.log(error);
@@ -211,86 +134,3 @@
 </script>
 
 @endsection
-{{--
-<script>
-    var app = new Vue({
-        el: "#root",
-        data: {
-            comment: [''],
-            newComment: '',
-        },
-        mounted(){
-            this.getComment();
-        },
-        methods: {
-            getComment: function() {
-                axios.get("{{ route('api.comments.index', '$blogpost->id') }}")
-                    .then(response => {
-                        this.comment = response.data;
-                    })
-                    .catch(response => {
-                        console.log(response);
-                    })
-            },
-            createComment: function () {
-                axios.post("{{ route('api.comment.store', '$blogpost->id') }}", {
-                    commentContent: this.newComment
-                })
-                .then(response => {
-                    console.log(response);
-                    this.comment.push(response.data);
-                    this.newComment = '';
-                })
-                .catch(response => {
-                    console.log(response);
-                })
-
-            }
-        }
-    });
-</script>
-
-@endsection
-{{--
-@section('scripts')
-  <script>
-      const app = new Vue({
-          el: '#app',
-          data: {
-              comments: {},
-              commentBox: '',
-              post: {!! $blogpost->toJson() !!},
-              user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
-          },
-          mounted() {
-              this.getComments();
-          },
-          methods: {
-              getComments() {
-                  axios.get('/api/posts/'+this.post.id+'/comments')
-                       .then((response) => {
-                           this.comments = response.data
-                       })
-                       .catch(function (error) {
-                           console.log(error);
-                       }
-                  );
-              },
-              postComment() {
-                  axios.post('/api/posts/'+this.post.id+'/comment', {
-                      api_token: this.user.api_token,
-                      comment_for_blog: this.commentBox
-                  })
-                  .then((response) => {
-                      this.comments.unshift(response.data);
-                      this.commentBox = '';
-                  })
-                  .catch((error) => {
-                      console.log(error);
-                  })
-              }
-          }
-      })
-  </script>
-@endsection
---}}

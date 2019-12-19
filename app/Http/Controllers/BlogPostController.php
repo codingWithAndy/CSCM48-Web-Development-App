@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\BlogPost;
 use App\BlogComment;
+use App\BlogUser;
 use App\Tag;
 use Image;
 
@@ -28,8 +29,11 @@ class BlogPostController extends Controller
     public function show($id)
     {
         $blogPost = BlogPost::findOrFail($id);
+        $bloguser = BlogUser::findOrFail($blogPost->blog_user_id);
+        //dd($user);
+        $blogPost->increment('page_view');
 
-        return view('blogposts.posts', ['blogpost' => $blogPost]);
+        return view('blogposts.posts', ['blogpost' => $blogPost, 'bloguser' => $bloguser]);
     }
 
     /**
@@ -84,7 +88,7 @@ class BlogPostController extends Controller
         $post->blogTags()->sync($request->tags, false);
 
         session()->flash('message', 'Blog post was created!');
-        return redirect()->route('blog_post.index');
+        return redirect()->route('home');
     }
 
 

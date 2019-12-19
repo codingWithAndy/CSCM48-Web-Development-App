@@ -1,7 +1,7 @@
 <?php
 
 use App\Google;
-use Auth;
+//use Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +16,6 @@ use Auth;
 // Singleton Service Container
 app()->singleton('google', function ($app) {
     $id = Auth::id();
-    //dd($id);
     return new Google($id);
 
 });

@@ -30,7 +30,6 @@ class SocialAuthGoogleController extends Controller
 
                 Auth::loginUsingId($existUser->id, true);
                 $g = app()->make('google');
-                //d($g);
                 return redirect()->route('home');
 
             } else {
@@ -46,7 +45,6 @@ class SocialAuthGoogleController extends Controller
 
                 Auth::loginUsingId($user->id, true);
                 $g = app()->make('google');
-                //d($g);
                 return redirect()->route('bloguser.create');
 
             }

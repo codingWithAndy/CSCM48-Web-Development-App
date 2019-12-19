@@ -20,11 +20,9 @@ class CheckAuthor
 
         $idCheck = $request->route()->parameters();
         $idCheck = $idCheck['blog_post'];
-        $blogpost = BlogPost::findOrFail($idCheck); // ->toArray();
-        //dd($idCheck, $request->route()->parameters(), $request->route(), $blogpost->blog_user_id);
+        $blogpost = BlogPost::findOrFail($idCheck);
         $blogAuthor = $blogpost->blog_user_id;
         //dd($$blogAuthor);
-
 
         if($blogAuthor == auth()->user()->id){
             return $next($request);
@@ -33,8 +31,5 @@ class CheckAuthor
             //dd($blogAuthor, auth()->user()->id);
             return response("You did not create this blog!");
         }
-
-
-
     }
 }
