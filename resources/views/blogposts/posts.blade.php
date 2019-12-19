@@ -79,7 +79,7 @@
         @if (Auth::check() != null)
             <form method="POST" action="{{ route('blog_comment.store', $blogpost->id) }}">
                 @csrf
-                <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" v-model="commentBox"></textarea> {{--v-model="commentBox"--}}
+                <textarea class="form-control" rows='3' placeholder="Leave a comment...." type="text" name="content" value="{{ old('content') }}" v-model="commentBox"></textarea>
                 <button class="btn btn-success" style="margin-top:10px" type="submit" value="Submit">Save Comment</button>
             </form>
         @else

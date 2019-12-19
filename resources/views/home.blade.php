@@ -32,7 +32,7 @@
                                     <form method="POST" action="{{route('blog_post.destroy', $blogPost->id)}}">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="blog_posts_edit/{{$blogPost->id}}" class="btn btn-warning" style="margin:10px 5px"> Edit</a>
+                                    <a href="blog_posts_edit/{{$blogPost->id}}" class="btn btn-warning" style="margin:10px 5px">Edit</a>
                                     <button class="btn btn-danger" style="margin:10px 5px" type="submit">Delete</button>
                                     </form>
                                 </li>
@@ -40,8 +40,6 @@
                         @endforeach
 
                     </ol>
-
-                    {{-- {{$blogposts->links()}} --}}
 
                     <a class="btn btn-success" style="margin:10px 5px" href="{{ route('blog_post.create') }}">Create a blog post!</a>
                 </div>
